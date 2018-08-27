@@ -1,4 +1,5 @@
 import argparse
+import json
 
 
 def get_parser():
@@ -8,20 +9,25 @@ def get_parser():
 
 
 def get_raw_string(raw_string):
-    formatted_string = {}
     try:
-        formatted_string = eval(raw_string)
+        formatted_string = json.dumps(raw_string)
         return formatted_string
     except (TypeError, ValueError):
         return None
 
+def get_converted_dict(formatted_string):
+    converted_dict = json.loads(formatted_string)
+    return converted_dict
 
-def print_string(formatted_string):
-    print('{}'.format(formatted_string))
+def print_dict(converted_dict):
+    print('{}'.format(converted_dict))
 
 
 if __name__ == '__main__':
     args = get_parser()
 
     entered_string = get_raw_string(args.string)
-    print_string(entered_string)
+
+    new_dict = get_converted_dict(entered_string)
+
+    print_dict(new_dict)
